@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <vector>
 #include <fstream>
 using namespace std;
 
@@ -13,9 +14,9 @@ public:
     string getMovie() { return movie; }
     void setMovie(string m) { movie = m; }
     int getYear() { return year; }
-    void getYear(int y) { year = y; }
+    void setYear(int y) { year = y; }
     string getWriter() { return writer; }
-    void getWriter(string w) { writer = w; }
+    void setWriter(string w) { writer = w; }
 
     void print() {
         cout << setw(15) << "Movie: " << movie << endl;
@@ -34,5 +35,34 @@ int main() {
     int y; // hold temp year
     string w; //hold temp screenwriter
     int i = 0; //temp index
+
+    //while input good
+    if (fin.is_open()) {
+        while (getline(fin, m)) {
+            fin >> y;
+            fin.ignore();
+            getline(fin, w);
+            //temporary movie class
+            Movie tmp;
+            tmp.setMovie(m);
+            tmp.setYear(y);
+            tmp.setWriter(w);
+            // add temp to vector
+            movies.push_back(tmp);
+            //next increment
+            i++;
+        }
+        //close input file
+        fin.close();
+    }
+    else {
+        //if file was no good
+        cout << "Input file not found";
+        return 1;
+    }
+    //output all elements in vector;
+    for (int i = 0; i < movies.size(); i++) {
+        movies[i].print();
+    }
     return 0;
 }
